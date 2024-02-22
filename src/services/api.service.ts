@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { BASE_URL } from '@/constants/apiUrl.ts';
-import { getJwt } from '../services/auth.service';
+import { useAuthState } from '@/store';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -11,7 +11,7 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((request) => {
-  const token = getJwt();
+  const token = useAuthState.getState().token;
   if (token) {
     request.headers.Authorization = `Bearer ${token}`;
   }

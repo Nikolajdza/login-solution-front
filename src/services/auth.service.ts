@@ -2,6 +2,7 @@ import { AUTHORIZATION_KEY } from '../constants/jwt.ts';
 import { JwtDecode } from '../interfaces/jwt';
 import { jwtDecode } from 'jwt-decode';
 import { LoginResponse } from '../interfaces/axios.ts';
+import { useAuthState } from '@/store';
 
 export const decodeJwt = (token: string): JwtDecode => {
   const jwtDecoded: never = jwtDecode(token);
@@ -30,15 +31,10 @@ export const setJwt = (token: string | null): void => {
 };
 
 export const isAuthenticated = (): boolean => {
-  return !!localStorage.getItem(AUTHORIZATION_KEY);
+  const token = useAuthState.getState().token;
+  return !!token;
 };
 
 export const getJwt = (): string | null => {
-  return localStorage.getItem(AUTHORIZATION_KEY);
-};
-
-
-export const logout = (): void => {
-  // localStorage.removeItem(AUTHORIZATION_KEY);
-  window.location.replace('/login');
+  return useAuthState.getState().token;
 };

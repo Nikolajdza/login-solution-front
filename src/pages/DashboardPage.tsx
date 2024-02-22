@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Box,
   Text,
@@ -8,18 +8,26 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Divider
+  Divider, Spinner
 } from '@chakra-ui/react';
-import { useAuthState, State } from '@/store';
+import { useAuthState } from '@/store';
 import { FaUserCircle } from 'react-icons/fa';
+import { jwtDecode } from 'jwt-decode';
+import { isAuthenticated } from '@/services/auth.service.ts';
 
 export const DashboardPage: FC = () => {
-  const { user } = useAuthState() as State;
+  const { user, token, setUser } = useAuthState();
+
+  useEffect(() => {
+    if (token) {
+      setUser(jwtDecode(token));
+    }
+  }, [token, setUser]);
 
   return (
     <Box w="100%" mx="auto" pt="100px" display="flex" flexDirection="column" justifyContent="center"
          alignItems="center">
-      <Card w="md" maxW="md">
+      {isAuthenticated() ? (<Card w="md" maxW="md">
         <CardHeader>
           <Text fontSize="xl" textAlign="center">User Profile</Text>
           <Divider />
@@ -48,7 +56,7 @@ export const DashboardPage: FC = () => {
         </CardBody>
         <CardFooter>
         </CardFooter>
-      </Card>
+      </Card>) : <Spinner />}
     </Box>
   );
 };

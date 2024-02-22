@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { Box, Flex, Text, Button, Avatar, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { FaChevronDown, FaReact } from 'react-icons/fa';
-import { useAuthState, State } from '@/store';
-import { logout } from '@/services/auth.service.ts';
+import { useAuthState } from '@/store';
+import { isAuthenticated } from '@/services/auth.service.ts';
 
 export const Header: FC = () => {
-  const { user, isAuthenticated, setIsAuthenticated, setUser } = useAuthState() as State;
+  const { user, setToken, setUser } = useAuthState();
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    setToken(null);
     setUser(null);
-    logout();
+    window.location.replace('/login');
   };
 
   return (
@@ -21,7 +21,7 @@ export const Header: FC = () => {
           <Box as={FaReact} boxSize="50px" color="white" mr={4} />
           <Text fontSize="4xl">Login Solution</Text>
         </Flex>
-        {user && isAuthenticated ? (
+        {isAuthenticated() && user ? (
           <Flex alignItems="center">
             <Text fontSize="xl" mr={5}>{user.name}</Text>
             <Menu>

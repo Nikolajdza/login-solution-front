@@ -2,24 +2,25 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { User } from '../interfaces/user.ts';
 
-export interface State {
+interface State {
+  token: string | null;
   user: null | User;
-  isAuthenticated: boolean;
-  setIsAuthenticated: (value: boolean) => void;
   setUser: (user: User | null) => void;
+  setToken: (token: string | null) => void;
 }
 
 export const useAuthState = create(
   persist(
     (set) => ({
+      token: null,
       user: null,
-      isAuthenticated: false,
-      setIsAuthenticated: (value: boolean) => set(() => ({ isAuthenticated: value })),
-      setUser: (user: User) => set(() => ({ user }))
+      setUser: (user: User | null) => set(() => ({ user })),
+      setToken: (token: string | null) => set(() => ({ token }))
     }),
     {
-      name: 'auth-storage', // unique name
-      storage: createJSONStorage(() => localStorage) // use localStorage
+      name: 'Authorization',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state: State) => ({ token: state.token })
     }
   )
 );

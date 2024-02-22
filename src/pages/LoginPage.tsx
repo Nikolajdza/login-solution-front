@@ -1,36 +1,25 @@
 import { FC, useEffect } from 'react';
 import { Button, VStack, Box, Icon, Card, CardHeader, CardBody, Text, Divider, CardFooter } from '@chakra-ui/react';
 import { FaGoogle, FaMicrosoft, FaFacebook } from 'react-icons/fa';
-import useUser from '@/hooks/useUser.ts';
 import { useNavigate } from 'react-router-dom';
-import { useAuthState, State } from '@/store';
+import { useAuthState } from '@/store';
+import { isAuthenticated } from '@/services/auth.service.ts';
+import { jwtDecode } from 'jwt-decode';
+import { useLogin } from '@/hooks/useLogin.ts';
 
 export const LoginPage: FC = () => {
+  const handleLogin = useLogin();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthState() as State;
-  const { refetch } = useUser();
+  const { setUser, token } = useAuthState();
+  const isUserAuthenticated = isAuthenticated();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
+      setUser(jwtDecode(token));
       navigate('/login/success');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isUserAuthenticated, navigate, setUser, token]);
 
-  const handleLogin = (provider: 'google' | 'microsoft' | 'facebook') => {
-    const newWindow = window.open(`http://localhost:3000/auth/${provider}`,
-      '_blank',
-      'width=500,height=600'
-    );
-
-    // Create a broadcast channel
-    const bc = new BroadcastChannel('auth_channel');
-    bc.onmessage = (event) => {
-      if (event.data === 'authentication complete') {
-        if (newWindow) newWindow.close();
-        refetch();
-      }
-    };
-  };
 
   return (
     <Box w="100%" mx="auto" pt="100px" display="flex" flexDirection="column" justifyContent="center"
