@@ -1,3 +1,2 @@
-export const JWT = 'jwt';
-export const AUTHORIZATION_KEY = 'Authorization';
-
+export const JWT = 'jwt'
+export const AUTHORIZATION_KEY = 'Authorization'

@@ -1,9 +1,9 @@
-const DEFAULT_ROUTE = '/';
-const PAGE_NOT_FOUND_ROUTE = '/page-not-found';
-const DASHBOARD = '/dashboard';
-const LOGIN = '/login';
-const LOGIN_SUCCESS = '/login/success';
-const LOGIN_ERROR = '/login/error';
+const DEFAULT_ROUTE = '/'
+const PAGE_NOT_FOUND_ROUTE = '/page-not-found'
+const DASHBOARD = '/dashboard'
+const LOGIN = '/login'
+const LOGIN_SUCCESS = '/login/success'
+const LOGIN_ERROR = '/login/error'
 
 export const ROUTES = {
   DEFAULT_ROUTE,
@@ -11,5 +11,5 @@ export const ROUTES = {
   DASHBOARD,
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
-};
+  LOGIN_ERROR,
+}

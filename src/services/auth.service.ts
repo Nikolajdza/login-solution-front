@@ -1,40 +1,23 @@
-import { AUTHORIZATION_KEY } from '../constants/jwt.ts';
-import { JwtDecode } from '../interfaces/jwt';
-import { jwtDecode } from 'jwt-decode';
-import { LoginResponse } from '../interfaces/axios.ts';
-import { useAuthState } from '@/store';
+import { JwtDecode } from '../interfaces/jwt'
+import { jwtDecode } from 'jwt-decode'
+import { useAuthState } from '@/store'
 
 export const decodeJwt = (token: string): JwtDecode => {
-  const jwtDecoded: never = jwtDecode(token);
-  let res = {};
+  const jwtDecoded: never = jwtDecode(token)
+  let res = {}
   Object.keys(jwtDecoded).forEach(function (key) {
-    const spitProperty: string[] = key.split('/claims/');
-    const splitPropetyLenth: number = spitProperty.length;
+    const spitProperty: string[] = key.split('/claims/')
+    const splitPropetyLenth: number = spitProperty.length
     res = {
       ...res,
-      [splitPropetyLenth == 1 ? key : spitProperty[splitPropetyLenth - 1]]: jwtDecoded[key]
-    };
-  });
-  return res as JwtDecode;
-};
-
-export const setAuth = (auth: LoginResponse): void => {
-  localStorage.setItem(AUTHORIZATION_KEY, auth.token!);
-};
-
-export const setJwt = (token: string | null): void => {
-  if (token) {
-    localStorage.setItem(AUTHORIZATION_KEY, token);
-  } else {
-    localStorage.removeItem(AUTHORIZATION_KEY);
-  }
-};
+      [splitPropetyLenth == 1 ? key : spitProperty[splitPropetyLenth - 1]]:
+        jwtDecoded[key],
+    }
+  })
+  return res as JwtDecode
+}
 
 export const isAuthenticated = (): boolean => {
-  const token = useAuthState.getState().token;
-  return !!token;
-};
-
-export const getJwt = (): string | null => {
-  return useAuthState.getState().token;
-};
+  const token = useAuthState.getState().token
+  return !!token
+}
