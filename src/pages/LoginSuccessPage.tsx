@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { isAuthenticated } from '@/services/auth.service.ts'
+import { ROUTES } from '@/constants/pageRoutes.ts'
 
 export const LoginSuccessPage = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate('/dashboard')
+      navigate(ROUTES.DASHBOARD, { replace: true })
     }
   }, [navigate])
 

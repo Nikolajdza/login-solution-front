@@ -13,6 +13,7 @@ import {
 import { FaChevronDown, FaReact } from 'react-icons/fa'
 import { useAuthState } from '@/store'
 import { isAuthenticated } from '@/services/auth.service.ts'
+import { ROUTES } from '@/constants/pageRoutes.ts'
 
 export const Header: FC = () => {
   const { user, setToken, setUser } = useAuthState()
@@ -20,7 +21,7 @@ export const Header: FC = () => {
   const handleLogout = () => {
     setToken(null)
     setUser(null)
-    window.location.replace('/login')
+    window.location.replace(ROUTES.LOGIN)
   }
 
   return (

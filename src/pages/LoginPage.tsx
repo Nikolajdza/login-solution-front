@@ -17,6 +17,7 @@ import { useAuthState } from '@/store'
 import { isAuthenticated } from '@/services/auth.service.ts'
 import { jwtDecode } from 'jwt-decode'
 import { useLogin } from '@/hooks/useLogin.ts'
+import { ROUTES } from '@/constants/pageRoutes.ts'
 
 export const LoginPage: FC = () => {
   const handleLogin = useLogin()
@@ -27,7 +28,7 @@ export const LoginPage: FC = () => {
   useEffect(() => {
     if (token) {
       setUser(jwtDecode(token))
-      navigate('/login/success')
+      navigate(ROUTES.LOGIN_SUCCESS)
     }
   }, [isUserAuthenticated, navigate, setUser, token])
 
