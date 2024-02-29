@@ -2,11 +2,12 @@ import axiosInstance from './api.service'
 import { decodeJwt } from '@/services/auth.service.ts'
 import { JwtDecode } from '@/interfaces/jwt.ts'
 import { useAuthState } from '@/store'
+import { LoginResponse } from '@/interfaces/axios.ts'
 
 class UserService {
-  async fetchUser(): Promise<JwtDecode> {
+  async fetchUser(): Promise<JwtDecode | LoginResponse> {
     try {
-      const response = await axiosInstance.get('auth/user', {
+      const response = await axiosInstance.get<LoginResponse>('auth/user', {
         withCredentials: true,
       })
       if (response.data.token) {
