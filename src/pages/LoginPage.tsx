@@ -18,6 +18,7 @@ import { isAuthenticated } from '@/services/auth.service.ts'
 import { jwtDecode } from 'jwt-decode'
 import { useLogin } from '@/hooks/useLogin.ts'
 import { ROUTES } from '@/constants/pageRoutes.ts'
+import { AuthProvider } from '@/interfaces/authProvider.ts'
 
 export const LoginPage: FC = () => {
   const handleLogin = useLogin()
@@ -55,7 +56,7 @@ export const LoginPage: FC = () => {
               leftIcon={<Icon as={FaGoogle} color="#DB4437" />}
               colorScheme="gray"
               minW="220px"
-              onClick={() => handleLogin('google')}
+              onClick={() => handleLogin(AuthProvider.GOOGLE)}
             >
               Login with Google
             </Button>
@@ -63,7 +64,7 @@ export const LoginPage: FC = () => {
               leftIcon={<Icon as={FaMicrosoft} color="#2B5797" />}
               colorScheme="gray"
               minW="220px"
-              onClick={() => handleLogin('microsoft')}
+              onClick={() => handleLogin(AuthProvider.MICROSOFT)}
             >
               Login with Microsoft
             </Button>
@@ -71,7 +72,7 @@ export const LoginPage: FC = () => {
               leftIcon={<Icon as={FaFacebook} color="#3C5A99" />}
               colorScheme="gray"
               minW="220px"
-              onClick={() => handleLogin('facebook')}
+              onClick={() => handleLogin(AuthProvider.FACEBOOK)}
             >
               Login with Facebook
             </Button>

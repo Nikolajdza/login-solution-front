@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import { AuthLayout } from '@/components/ui/AuthLayout.tsx'
+import { Layout } from '@/components/ui/Layout.tsx'
 import { ROUTES } from '@/constants/pageRoutes.ts'
 import { LoginPage } from '@/pages/LoginPage.tsx'
 import { LoginSuccessPage } from '@/pages/LoginSuccessPage.tsx'
@@ -7,7 +7,7 @@ import { LoginErrorPage } from '@/pages/LoginErrorPage.tsx'
 
 export const authRoute: RouteObject = {
   path: ROUTES.DEFAULT_ROUTE,
-  element: <AuthLayout />,
+  element: <Layout />,
   children: [
     {
       path: ROUTES.LOGIN_SUCCESS,
